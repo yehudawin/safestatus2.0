@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeStatus - התחברות</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+    
+    <script>tailwind.config = {
+        "theme": {
+            "extend": {
+                "colors": {
+                    "shelter": "#FF9800",
+                    "safe": "#4CAF50",
+                    "no-update": "#F44336",
+                    "dark": "#121212",
+                    "dark-surface": "#1E1E1E",
+                    "dark-card": "#272727"
+                },
+                "fontFamily": {
+                    "heebo": ["Heebo", "sans-serif"],
+                    "sans": ["Inter", "sans-serif"]
+                }
+            }
+        }
+    };</script>
+    
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif;
+            direction: rtl;
+        }
+        ::-webkit-scrollbar { display: none; }
+        html, body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .highlighted-section {
+            outline: 2px solid #3F20FB;
+            background-color: rgba(63, 32, 251, 0.1);
+        }
+        .edit-button {
+            position: absolute;
+            z-index: 1000;
+        }
+    </style>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SafeStatus">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="SafeStatus">
+    <meta name="msapplication-TileColor" content="#FF9800">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;500;600;700;800;900&display=swap">
+</head>
+
+<body class="bg-dark text-white font-heebo">
+    <!-- Login/Signup Screen -->
+    <div id="auth-screen" class="h-[800px] bg-dark flex flex-col">
+        <!-- Header -->
+        <header id="auth-header" class="p-6 text-center">
+            <div class="mb-6">
+                <div class="w-20 h-20 bg-shelter rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-shield-halved text-3xl text-white"></i>
+                </div>
+                <h1 class="text-3xl font-bold">SafeStatus</h1>
+                <p class="text-gray-400 mt-2">הישארו מחוברים ובטוחים</p>
+            </div>
+        </header>
+
+        <!-- Auth Form Container -->
+        <div id="auth-container" class="flex-1 px-6">
+            <!-- Login Form -->
+            <div id="login-form" class="space-y-6">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold mb-2">כניסה לחשבון</h2>
+                    <p class="text-gray-400">הזינו את פרטיכם כדי להמשיך</p>
+                </div>
+
+                <!-- Phone Number Input -->
+                <div id="phone-input" class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-300">מספר טלפון</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 right-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-phone text-gray-400"></i>
+                        </div>
+                        <input type="tel" id="phone-number" placeholder="050-123-4567" 
+                               class="w-full bg-dark-surface border border-gray-600 rounded-lg px-4 py-3 pr-10 text-white placeholder-gray-400 focus:outline-none focus:border-shelter">
+                    </div>
+                </div>
+
+                <!-- Verification Code Input (Hidden initially) -->
+                <div id="verification-input" class="space-y-2 hidden">
+                    <label class="block text-sm font-medium text-gray-300">קוד אימות</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 right-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-key text-gray-400"></i>
+                        </div>
+                        <input type="text" id="otp-code" placeholder="הזינו קוד 6 ספרות" maxlength="6"
+                               class="w-full bg-dark-surface border border-gray-600 rounded-lg px-4 py-3 pr-10 text-white placeholder-gray-400 focus:outline-none focus:border-safe">
+                    </div>
+                    <p id="phone-display-text" class="text-xs text-gray-400">שלחנו קוד אימות ל-</p>
+                    <button id="resend-otp-btn" class="text-shelter text-sm hover:text-orange-600">שלח קוד חדש</button>
+                </div>
+
+                <!-- Action Button -->
+                <button id="auth-action-btn" class="w-full bg-shelter py-4 rounded-lg text-lg font-bold hover:bg-orange-600 transition-colors">
+                    שלח קוד אימות
+                </button>
+
+                <!-- Test Mode Notice -->
+                <div class="bg-yellow-900 bg-opacity-30 border border-yellow-600 rounded-lg p-3 text-center">
+                    <i class="fa-solid fa-flask text-yellow-500 ml-2"></i>
+                    <span class="text-yellow-300 text-sm">
+                        מצב בדיקה - השתמש בקוד: <strong>123456</strong>
+                    </span>
+                </div>
+
+                <!-- Terms and Privacy -->
+                <div class="text-center text-xs text-gray-400 leading-relaxed">
+                    בהמשך הפעולה אתם מסכימים ל
+                    <span class="text-shelter underline cursor-pointer">תנאי השימוש</span>
+                    ול
+                    <span class="text-shelter underline cursor-pointer">מדיניות הפרטיות</span>
+                </div>
+            </div>
+
+            <!-- Profile Setup Form (Hidden initially) -->
+            <div id="profile-setup" class="space-y-6 hidden">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold mb-2">הגדרת פרופיל</h2>
+                    <p class="text-gray-400">בואו נכיר אתכם טוב יותר</p>
+                </div>
+
+                <!-- Profile Picture -->
+                <div id="profile-pic-section" class="text-center">
+                    <div class="w-24 h-24 bg-dark-surface rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-dashed border-gray-600">
+                        <i class="fa-solid fa-camera text-2xl text-gray-400"></i>
+                    </div>
+                    <button class="text-shelter text-sm">הוסף תמונת פרופיל</button>
+                </div>
+
+                <!-- Name Input -->
+                <div id="name-input" class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-300">שם מלא</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 right-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-user text-gray-400"></i>
+                        </div>
+                        <input type="text" placeholder="הזינו את שמכם המלא" 
+                               class="w-full bg-dark-surface border border-gray-600 rounded-lg px-4 py-3 pr-10 text-white placeholder-gray-400 focus:outline-none focus:border-shelter">
+                    </div>
+                </div>
+
+                <!-- Location Input -->
+                <div id="location-input" class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-300">עיר מגורים (אופציונלי)</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 right-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-map-marker-alt text-gray-400"></i>
+                        </div>
+                        <input type="text" placeholder="תל אביב, ירושלים..." 
+                               class="w-full bg-dark-surface border border-gray-600 rounded-lg px-4 py-3 pr-10 text-white placeholder-gray-400 focus:outline-none focus:border-shelter">
+                    </div>
+                </div>
+
+                <!-- Emergency Contact -->
+                <div id="emergency-contact" class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-300">איש קשר חירום</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 right-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-phone text-gray-400"></i>
+                        </div>
+                        <input type="tel" placeholder="מספר טלפון של קרוב משפחה" 
+                               class="w-full bg-dark-surface border border-gray-600 rounded-lg px-4 py-3 pr-10 text-white placeholder-gray-400 focus:outline-none focus:border-shelter">
+                    </div>
+                </div>
+
+                <!-- Complete Setup Button -->
+                <button id="complete-setup-btn" class="w-full bg-safe py-4 rounded-lg text-lg font-bold hover:bg-green-600 transition-colors">
+                    השלם הגדרה
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer id="auth-footer" class="p-6 text-center">
+            <div class="flex items-center justify-center space-x-4 space-x-reverse text-sm text-gray-400">
+                <div class="flex items-center">
+                    <i class="fa-solid fa-shield-check ml-1 text-safe"></i>
+                    <span>מאובטח ומוצפן</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fa-solid fa-users ml-1 text-shelter"></i>
+                    <span>רק אנשי קשר הדדיים</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
+        <div class="bg-dark-surface p-6 rounded-lg text-center">
+            <div class="loading mb-3 mx-auto"></div>
+            <div id="loading-text" class="text-white">טוען...</div>
+        </div>
+    </div>
+
+    <style>
+        .loading {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #FF9800;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

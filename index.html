@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+    <title>SafeStatus - מצב בטוח</title>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SafeStatus">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="SafeStatus">
+    <meta name="msapplication-TileColor" content="#FF9800">
+    <meta name="msapplication-config" content="browserconfig.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#FF9800">
+    
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "shelter": "#FF9800",
+                        "safe": "#4CAF50", 
+                        "no-update": "#F44336",
+                        "dark": "#121212",
+                        "dark-surface": "#1E1E1E",
+                        "dark-card": "#272727"
+                    }
+                }
+            }
+        };
+    </script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .screen { display: none; }
+        .screen.active { display: block; }
+    </style>
+</head>
+
+<body class="bg-dark text-white">
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen active min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-dark-surface p-6 rounded-lg">
+            <div class="text-center mb-6">
+                <i class="fa-solid fa-shield-heart text-4xl text-shelter mb-3"></i>
+                <h1 class="text-2xl font-bold">SafeStatus</h1>
+                <p class="text-gray-400">עדכון מצב בטוח</p>
+            </div>
+            
+            <div id="phone-step">
+                <input type="tel" id="phone-input" placeholder="05XXXXXXXX" 
+                       class="w-full p-3 bg-dark-card rounded-lg mb-4 text-center">
+                <button id="send-otp" class="w-full bg-shelter py-3 rounded-lg font-medium">
+                    שלח קוד
+                </button>
+            </div>
+            
+            <div id="otp-step" style="display:none;">
+                <input type="text" id="otp-input" placeholder="000000" maxlength="6"
+                       class="w-full p-3 bg-dark-card rounded-lg mb-4 text-center">
+                <button id="verify-otp" class="w-full bg-safe py-3 rounded-lg font-medium">
+                    אמת
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="main-screen" class="screen">
+        <!-- Top Bar -->
+        <div class="bg-dark-surface p-4 fixed top-0 w-full z-10">
+            <h1 class="text-xl font-bold text-center">SafeStatus</h1>
+        </div>
+        
+        <!-- Content -->
+        <div class="pt-16 pb-20">
+            <!-- My Status -->
+            <div class="m-4 bg-dark-surface rounded-lg p-4">
+                <h2 class="font-bold mb-3">המצב שלי</h2>
+                <div class="flex justify-between items-center">
+                    <div id="my-status" class="text-gray-400">לא עודכן</div>
+                    <button id="update-btn" class="bg-shelter px-4 py-2 rounded-lg">עדכן</button>
+                </div>
+            </div>
+            
+            <!-- Friends Summary -->
+            <div class="m-4 bg-dark-surface rounded-lg p-4">
+                <h2 class="font-bold mb-3">חברים</h2>
+                <div class="flex justify-between">
+                    <div class="text-center">
+                        <div class="text-shelter text-xl font-bold">0</div>
+                        <div class="text-xs">במקלט</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-safe text-xl font-bold">0</div>
+                        <div class="text-xs">בטוחים</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-no-update text-xl font-bold">0</div>
+                        <div class="text-xs">לא עדכנו</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Friends List -->
+            <div id="friends-list" class="m-4">
+                <div class="text-center text-gray-400 py-8">
+                    <i class="fa-solid fa-users text-3xl mb-2"></i>
+                    <p>אין חברים עדיין</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Nav -->
+        <div class="bg-dark-surface fixed bottom-0 w-full flex justify-around py-3">
+            <button class="nav-btn" data-screen="home">
+                <i class="fa-solid fa-home"></i>
+            </button>
+            <button class="nav-btn" data-screen="contacts">
+                <i class="fa-solid fa-address-book"></i>
+            </button>
+            <button class="nav-btn" data-screen="settings">
+                <i class="fa-solid fa-gear"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Status Update Modal -->
+    <div id="status-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50" style="display:none;">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-dark-surface rounded-lg p-6 w-full max-w-md">
+                <h2 class="text-xl font-bold mb-4">עדכן מצב</h2>
+                <div class="space-y-3">
+                    <button class="status-btn w-full p-3 bg-dark-card rounded-lg border border-shelter" data-status="shelter">
+                        <i class="fa-solid fa-shield text-shelter ml-2"></i>
+                        במקלט
+                    </button>
+                    <button class="status-btn w-full p-3 bg-dark-card rounded-lg border border-safe" data-status="safe">
+                        <i class="fa-solid fa-check text-safe ml-2"></i>
+                        בטוח
+                    </button>
+                    <button class="status-btn w-full p-3 bg-dark-card rounded-lg border border-no-update" data-status="no-update">
+                        <i class="fa-solid fa-exclamation text-no-update ml-2"></i>
+                        לא בטוח
+                    </button>
+                </div>
+                <button id="close-modal" class="w-full mt-4 py-2 text-gray-400">ביטול</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication and redirect appropriately
+        function checkAuth() {
+            const authToken = localStorage.getItem('authToken');
+            const userPhone = localStorage.getItem('userPhone');
+            
+            if (authToken && userPhone) {
+                // User is logged in, redirect to home
+                window.location.href = 'home.html';
+            } else {
+                // User is not logged in, redirect to login
+                window.location.href = 'login.html';
+            }
+        }
+        
+        // Run auth check when page loads
+        document.addEventListener('DOMContentLoaded', checkAuth);
+        
+        // Register service worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

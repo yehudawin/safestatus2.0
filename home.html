@@ -1,0 +1,366 @@
+<html dir="rtl"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+    
+    <script>tailwind.config = {
+  "theme": {
+    "extend": {
+      "colors": {
+        "shelter": "#FF9800",
+        "safe": "#4CAF50",
+        "no-update": "#F44336",
+        "dark": "#121212",
+        "dark-surface": "#1E1E1E",
+        "dark-card": "#272727"
+      },
+      "fontFamily": {
+        "heebo": [
+          "Heebo",
+          "sans-serif"
+        ],
+        "sans": [
+          "Inter",
+          "sans-serif"
+        ]
+      }
+    }
+  }
+};</script>
+    <style>
+        body { font-family: 'Inter', sans-serif;
+            direction: rtl;
+        }
+    </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;500;600;700;800;900&amp;display=swap"><style>
+  .highlighted-section {
+    outline: 2px solid #3F20FB;
+    background-color: rgba(63, 32, 251, 0.1);
+  }
+
+  .edit-button {
+    position: absolute;
+    z-index: 1000;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  html, body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  </style></head>
+<body class="bg-dark text-white font-heebo">
+    <!-- Home Screen - Friends' Statuses -->
+    <div id="home-screen" class="min-h-screen pb-24">
+        <!-- App Bar -->
+        <header id="header" class="bg-dark-surface p-4 fixed top-0 w-full z-10 shadow-md">
+            <div class="flex justify-between items-center">
+                <h1 class="text-xl font-bold">מצב החברים שלי</h1>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button id="refresh-btn" class="p-2 rounded-full hover:bg-gray-700">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </button>
+                    <button id="settings-btn" class="p-2 rounded-full hover:bg-gray-700">
+                        <i class="fa-solid fa-gear"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Status Summary -->
+        <div id="status-summary" class="mt-16 p-4 bg-dark-surface mx-4 rounded-lg">
+            <div class="flex justify-between items-center">
+                <div class="text-center">
+                    <div class="text-shelter text-2xl font-bold">3</div>
+                    <div class="text-xs">במרחב מוגן</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-safe text-2xl font-bold">12</div>
+                    <div class="text-xs">בטוחים</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-no-update text-2xl font-bold">5</div>
+                    <div class="text-xs">לא עדכנו</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Friends List -->
+        <div id="friends-list" class="mt-4 px-4">
+            <!-- In Shelter Friends -->
+            <div id="in-shelter-section" class="mb-6">
+                <h2 class="text-shelter font-bold mb-2 flex items-center">
+                    <i class="fa-solid fa-shield-halved mr-2"></i>
+                    במרחב מוגן
+                </h2>
+                
+                <!-- Friend Card -->
+                <div id="friend-1" class="bg-dark-card rounded-lg p-4 mb-2 border-r-4 border-shelter">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-medium">דניאל כהן</h3>
+                            <div class="text-xs text-gray-400 flex items-center mt-1">
+                                <i class="fa-regular fa-clock ml-1"></i>
+                                לפני 5 דקות
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <button class="p-2 text-gray-400 hover:text-white">
+                                <i class="fa-solid fa-phone"></i>
+                            </button>
+                            <button class="p-2 text-gray-400 hover:text-white">
+                                <i class="fa-solid fa-message"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="friend-2" class="bg-dark-card rounded-lg p-4 mb-2 border-r-4 border-shelter">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-medium">מיכל לוי</h3>
+                            <div class="text-xs text-gray-400 flex items-center mt-1">
+                                <i class="fa-regular fa-clock ml-1"></i>
+                                לפני 12 דקות
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <button class="p-2 text-gray-400 hover:text-white">
+                                <i class="fa-solid fa-phone"></i>
+                            </button>
+                            <button class="p-2 text-gray-400 hover:text-white">
+                                <i class="fa-solid fa-message"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="friend-3" class="bg-dark-card rounded-lg p-4 border-r-4 border-shelter">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-medium">יוסי אברהם</h3>
+                            <div class="text-xs text-gray-400 flex items-center mt-1">
+                                <i class="fa-regular fa-clock ml-1"></i>
+                                לפני 18 דקות
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <button class="p-2 text-gray-400 hover:text-white">
+                                <i class="fa-solid fa-phone"></i>
+                            </button>
+                            <button class="p-2 text-gray-400 hover:text-white">
+                                <i class="fa-solid fa-message"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Safe Friends -->
+            <div id="safe-section" class="mb-6">
+                <h2 class="text-safe font-bold mb-2 flex items-center">
+                    <i class="fa-solid fa-check-circle mr-2"></i>
+                    בטוחים
+                </h2>
+                
+                <div id="friend-4" class="bg-dark-card rounded-lg p-4 mb-2 border-r-4 border-safe">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-medium">רונית שפירא</h3>
+                            <div class="text-xs text-gray-400 flex items-center mt-1">
+                                <i class="fa-regular fa-clock ml-1"></i>
+                                לפני 24 דקות
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <button class="p-2 text-gray-400 hover:text-white">
+                                <i class="fa-solid fa-phone"></i>
+                            </button>
+                            <button class="p-2 text-gray-400 hover:text-white">
+                                <i class="fa-solid fa-message"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="friend-5" class="bg-dark-card rounded-lg p-4 border-r-4 border-safe">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-medium">אלון גולן</h3>
+                            <div class="text-xs text-gray-400 flex items-center mt-1">
+                                <i class="fa-regular fa-clock ml-1"></i>
+                                לפני 35 דקות
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <button class="p-2 text-gray-400 hover:text-white">
+                                <i class="fa-solid fa-phone"></i>
+                            </button>
+                            <button class="p-2 text-gray-400 hover:text-white">
+                                <i class="fa-solid fa-message"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- No Update Friends -->
+            <div id="no-update-section">
+                <h2 class="text-no-update font-bold mb-2 flex items-center">
+                    <i class="fa-solid fa-question-circle mr-2"></i>
+                    לא עדכנו
+                </h2>
+                
+                <div id="friend-6" class="bg-dark-card rounded-lg p-4 mb-2 border-r-4 border-no-update">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-medium">שירה אדלר</h3>
+                            <div class="text-xs text-gray-400 flex items-center mt-1">
+                                <i class="fa-regular fa-clock ml-1"></i>
+                                לפני 3 שעות
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <button class="p-2 text-gray-400 hover:text-white">
+                                <i class="fa-solid fa-phone"></i>
+                            </button>
+                            <button class="p-2 text-gray-400 hover:text-white">
+                                <i class="fa-solid fa-message"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="friend-7" class="bg-dark-card rounded-lg p-4 border-r-4 border-no-update">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="font-medium">עומר 1234</h3>
+                            <div class="text-xs text-gray-400 flex items-center mt-1">
+                                <i class="fa-regular fa-clock ml-1"></i>
+                                מעל 5 שעות
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <button class="p-2 text-gray-400 hover:text-white">
+                                <i class="fa-solid fa-phone"></i>
+                            </button>
+                            <button class="p-2 text-gray-400 hover:text-white">
+                                <i class="fa-solid fa-message"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating Action Button -->
+        <button id="update-status-fab" class="fixed bottom-6 right-6 bg-blue-600 w-16 h-16 rounded-full shadow-lg flex items-center justify-center">
+            <i class="fa-solid fa-pen-to-square text-2xl"></i>
+        </button>
+    </div>
+    
+    <!-- Update Status Screen (Hidden by default) -->
+    <div id="update-status-screen" class="min-h-screen bg-dark hidden">
+        <!-- App Bar -->
+        <header id="update-header" class="bg-dark-surface p-4 fixed top-0 w-full z-10 shadow-md">
+            <div class="flex items-center">
+                <button id="back-btn" class="p-2 ml-2 rounded-full hover:bg-gray-700">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <h1 class="text-xl font-bold">עדכון מצב</h1>
+            </div>
+        </header>
+        
+        <div class="mt-20 px-6">
+            <!-- Current Status -->
+            <div id="current-status" class="bg-dark-surface p-5 rounded-lg mb-8 text-center">
+                <h2 class="text-lg mb-2">המצב שלך כרגע</h2>
+                <div class="text-safe font-bold text-xl mb-2 flex justify-center items-center">
+                    <i class="fa-solid fa-check-circle ml-2"></i>
+                    בטוח
+                </div>
+                <div class="text-xs text-gray-400">
+                    עודכן לאחרונה: היום, 14:35
+                </div>
+            </div>
+            
+            <!-- Status Buttons -->
+            <div id="status-buttons" class="space-y-6">
+                <button id="shelter-btn" class="w-full bg-shelter bg-opacity-20 border-2 border-shelter rounded-xl p-6 flex flex-col items-center">
+                    <i class="fa-solid fa-shield-halved text-4xl mb-4 text-shelter"></i>
+                    <span class="text-xl font-bold">נכנסתי למרחב מוגן</span>
+                </button>
+                
+                <button id="safe-btn" class="w-full bg-safe bg-opacity-20 border-2 border-safe rounded-xl p-6 flex flex-col items-center">
+                    <i class="fa-solid fa-check-circle text-4xl mb-4 text-safe"></i>
+                    <span class="text-xl font-bold">חזרתי לשגרה</span>
+                </button>
+            </div>
+            
+            <!-- Information Note -->
+            <div class="mt-8 text-sm text-gray-400 text-center px-4">
+                העדכון ישלח באופן אוטומטי לכל אנשי הקשר ששמרו אותך
+            </div>
+        </div>
+    </div>
+    
+    <!-- Permissions Screen (Hidden by default) -->
+    <div id="permissions-screen" class="min-h-screen bg-dark hidden">
+        <div class="flex flex-col items-center justify-center h-screen p-6">
+            <div class="mb-10">
+                <i class="fa-solid fa-address-book text-blue-500 text-6xl"></i>
+            </div>
+            
+            <h1 class="text-2xl font-bold mb-6 text-center">הפעלת גישה לאנשי קשר</h1>
+            
+            <p class="text-center text-gray-300 mb-8">
+                כדי לראות את הסטטוס של החברים שלך, אנחנו צריכים גישה לאנשי הקשר שלך. רק אנשי קשר הדדיים (שגם שמרו אותך) יוכלו לראות את הסטטוס שלך.
+            </p>
+            
+            <button id="allow-contacts-btn" class="bg-blue-600 w-full py-4 rounded-lg text-lg font-bold mb-8">
+                אפשר גישה לאנשי קשר
+            </button>
+            
+            <div class="bg-dark-surface p-4 rounded-lg text-sm text-gray-400">
+                <div class="flex items-start mb-2">
+                    <i class="fa-solid fa-lock mt-1 ml-2 text-blue-500"></i>
+                    <p>המידע שלך נשמר בצורה מוצפנת, ורק חברים ששמרו גם אותך יראו את הסטטוס שלך.</p>
+                </div>
+                
+                <div class="flex items-start">
+                    <i class="fa-solid fa-shield-halved mt-1 ml-2 text-blue-500"></i>
+                    <p>אנו לא משתמשים במידע שלך למטרות פרסום או מכירה לצד שלישי.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle between screens (for demo purposes)
+        document.getElementById('update-status-fab').addEventListener('click', function() {
+            document.getElementById('home-screen').classList.add('hidden');
+            document.getElementById('update-status-screen').classList.remove('hidden');
+        });
+        
+        document.getElementById('back-btn').addEventListener('click', function() {
+            document.getElementById('update-status-screen').classList.add('hidden');
+            document.getElementById('home-screen').classList.remove('hidden');
+        });
+        
+        // Show permissions screen on first load (comment out for demo navigation)
+        // document.getElementById('home-screen').classList.add('hidden');
+        // document.getElementById('permissions-screen').classList.remove('hidden');
+        
+        document.getElementById('allow-contacts-btn').addEventListener('click', function() {
+            document.getElementById('permissions-screen').classList.add('hidden');
+            document.getElementById('home-screen').classList.remove('hidden');
+        });
+    </script>
+
+</body></html>

@@ -1,0 +1,290 @@
+<html dir="rtl"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+    
+    <script>tailwind.config = {
+  "theme": {
+    "extend": {
+      "colors": {
+        "shelter": "#FF9800",
+        "safe": "#4CAF50",
+        "no-update": "#F44336",
+        "dark": "#121212",
+        "dark-surface": "#1E1E1E",
+        "dark-card": "#272727"
+      },
+      "fontFamily": {
+        "heebo": [
+          "Heebo",
+          "sans-serif"
+        ],
+        "sans": [
+          "Inter",
+          "sans-serif"
+        ]
+      }
+    }
+  }
+};</script>
+    <style>
+        body { font-family: 'Inter', sans-serif;
+            direction: rtl;
+        }
+    </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;500;600;700;800;900&amp;display=swap"><style>
+  .highlighted-section {
+    outline: 2px solid #3F20FB;
+    background-color: rgba(63, 32, 251, 0.1);
+  }
+
+  .edit-button {
+    position: absolute;
+    z-index: 1000;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  html, body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  </style></head>
+<body class="bg-dark text-white font-heebo">
+    <div id="settings-screen" class="min-h-screen bg-dark">
+        <!-- App Bar -->
+        <header id="header" class="bg-dark-surface p-4 shadow-md">
+            <div class="flex items-center justify-between">
+                <button id="back-btn" class="p-2">
+                    <i class="fa-solid fa-arrow-right text-xl"></i>
+                </button>
+                <h1 class="text-xl font-bold">הגדרות</h1>
+                <div class="w-10"></div>
+            </div>
+        </header>
+
+        <!-- Profile Section -->
+        <section id="profile-section" class="p-4 border-b border-gray-700">
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <div class="bg-blue-600 bg-opacity-20 rounded-full p-3">
+                    <i class="fa-solid fa-user text-blue-500 text-2xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-semibold">אבי כהן</h2>
+                    <p class="text-gray-400 text-sm">+972-50-123-4567</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Options -->
+        <div id="settings-content" class="p-4 space-y-1">
+            
+            <!-- Privacy Section -->
+            <div id="privacy-section" class="mb-6">
+                <h3 class="text-gray-400 text-sm font-medium mb-3 pr-4">פרטיות ואבטחה</h3>
+                
+                <div id="contacts-permission" class="bg-dark-card rounded-lg p-4 mb-2 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-address-book text-blue-500 ml-3"></i>
+                        <div>
+                            <p class="font-medium">גישה לאנשי קשר</p>
+                            <p class="text-gray-400 text-sm">מופעל</p>
+                        </div>
+                    </div>
+                    <div class="bg-green-600 w-12 h-6 rounded-full relative">
+                        <div class="bg-white w-5 h-5 rounded-full absolute top-0.5 right-0.5"></div>
+                    </div>
+                </div>
+
+                <div id="data-encryption" class="bg-dark-card rounded-lg p-4 mb-2 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-lock text-green-500 ml-3"></i>
+                        <div>
+                            <p class="font-medium">הצפנת מידע</p>
+                            <p class="text-gray-400 text-sm">מופעל תמיד</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-check text-green-500"></i>
+                </div>
+            </div>
+
+            <!-- Notifications Section -->
+            <div id="notifications-section" class="mb-6">
+                <h3 class="text-gray-400 text-sm font-medium mb-3 pr-4">התראות</h3>
+                
+                <div id="status-updates" class="bg-dark-card rounded-lg p-4 mb-2 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-bell text-shelter ml-3"></i>
+                        <div>
+                            <p class="font-medium">עדכוני סטטוס</p>
+                            <p class="text-gray-400 text-sm">קבל התראות כשחברים מעדכנים</p>
+                        </div>
+                    </div>
+                    <div class="bg-green-600 w-12 h-6 rounded-full relative">
+                        <div class="bg-white w-5 h-5 rounded-full absolute top-0.5 right-0.5"></div>
+                    </div>
+                </div>
+
+                <div id="emergency-alerts" class="bg-dark-card rounded-lg p-4 mb-2 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-triangle-exclamation text-no-update ml-3"></i>
+                        <div>
+                            <p class="font-medium">התראות חירום</p>
+                            <p class="text-gray-400 text-sm">התראות על מצבי חירום</p>
+                        </div>
+                    </div>
+                    <div class="bg-green-600 w-12 h-6 rounded-full relative">
+                        <div class="bg-white w-5 h-5 rounded-full absolute top-0.5 right-0.5"></div>
+                    </div>
+                </div>
+
+                <div id="vibration" class="bg-dark-card rounded-lg p-4 mb-2 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-mobile-screen text-blue-500 ml-3"></i>
+                        <div>
+                            <p class="font-medium">רטט</p>
+                            <p class="text-gray-400 text-sm">רטט בעת עדכון סטטוס</p>
+                        </div>
+                    </div>
+                    <div class="bg-green-600 w-12 h-6 rounded-full relative">
+                        <div class="bg-white w-5 h-5 rounded-full absolute top-0.5 right-0.5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- App Settings Section -->
+            <div id="app-settings-section" class="mb-6">
+                <h3 class="text-gray-400 text-sm font-medium mb-3 pr-4">הגדרות אפליקציה</h3>
+                
+                <div id="auto-refresh" class="bg-dark-card rounded-lg p-4 mb-2 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-refresh text-blue-500 ml-3"></i>
+                        <div>
+                            <p class="font-medium">רענון אוטומטי</p>
+                            <p class="text-gray-400 text-sm">כל 30 שניות</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-left text-gray-400"></i>
+                </div>
+
+                <div id="theme-setting" class="bg-dark-card rounded-lg p-4 mb-2 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-moon text-blue-500 ml-3"></i>
+                        <div>
+                            <p class="font-medium">מצב כהה</p>
+                            <p class="text-gray-400 text-sm">מומלץ לשימוש לילי</p>
+                        </div>
+                    </div>
+                    <div class="bg-green-600 w-12 h-6 rounded-full relative">
+                        <div class="bg-white w-5 h-5 rounded-full absolute top-0.5 right-0.5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Section -->
+            <div id="support-section" class="mb-6">
+                <h3 class="text-gray-400 text-sm font-medium mb-3 pr-4">תמיכה ומידע</h3>
+                
+                <div id="help-center" class="bg-dark-card rounded-lg p-4 mb-2 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-question-circle text-blue-500 ml-3"></i>
+                        <p class="font-medium">מרכז עזרה</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-left text-gray-400"></i>
+                </div>
+
+                <div id="contact-us" class="bg-dark-card rounded-lg p-4 mb-2 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-envelope text-blue-500 ml-3"></i>
+                        <p class="font-medium">צור קשר</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-left text-gray-400"></i>
+                </div>
+
+                <div id="app-version" class="bg-dark-card rounded-lg p-4 mb-2 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-info-circle text-blue-500 ml-3"></i>
+                        <div>
+                            <p class="font-medium">גרסת אפליקציה</p>
+                            <p class="text-gray-400 text-sm">v1.2.0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div id="danger-section" class="mb-6">
+                <h3 class="text-gray-400 text-sm font-medium mb-3 pr-4">אזור מסוכן</h3>
+                
+                <div id="logout-btn" class="bg-dark-card rounded-lg p-4 mb-2 flex items-center">
+                    <i class="fa-solid fa-sign-out-alt text-no-update ml-3"></i>
+                    <p class="font-medium text-no-update">התנתק</p>
+                </div>
+
+                <div id="delete-account" class="bg-dark-card rounded-lg p-4 mb-2 flex items-center">
+                    <i class="fa-solid fa-trash text-no-update ml-3"></i>
+                    <p class="font-medium text-no-update">מחק חשבון</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Back button functionality
+        document.getElementById('back-btn').addEventListener('click', function() {
+            // Navigate back to previous screen
+            window.history.back();
+        });
+
+        // Toggle switches functionality
+        document.querySelectorAll('.bg-green-600').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const dot = this.querySelector('div');
+                if (dot.classList.contains('right-0.5')) {
+                    dot.classList.remove('right-0.5');
+                    dot.classList.add('left-0.5');
+                    this.classList.remove('bg-green-600');
+                    this.classList.add('bg-gray-600');
+                } else {
+                    dot.classList.remove('left-0.5');
+                    dot.classList.add('right-0.5');
+                    this.classList.remove('bg-gray-600');
+                    this.classList.add('bg-green-600');
+                }
+            });
+        });
+
+        // Logout confirmation
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            if (confirm('האם אתה בטוח שברצונך להתנתק?')) {
+                alert('מתנתק...');
+            }
+        });
+
+        // Delete account confirmation
+        document.getElementById('delete-account').addEventListener('click', function() {
+            if (confirm('האם אתה בטוח שברצונך למחוק את החשבון? פעולה זו אינה הפיכה.')) {
+                alert('מוחק חשבון...');
+            }
+        });
+
+        // Navigation for clickable items
+        document.getElementById('auto-refresh').addEventListener('click', function() {
+            alert('פתיחת הגדרות רענון אוטומטי...');
+        });
+
+        document.getElementById('help-center').addEventListener('click', function() {
+            alert('פתיחת מרכז עזרה...');
+        });
+
+        document.getElementById('contact-us').addEventListener('click', function() {
+            alert('פתיחת טופס יצירת קשר...');
+        });
+    </script>
+
+</body></html>

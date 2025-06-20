@@ -1,0 +1,178 @@
+<html dir="rtl"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+    
+    <script>tailwind.config = {
+  "theme": {
+    "extend": {
+      "colors": {
+        "shelter": "#FF9800",
+        "safe": "#4CAF50",
+        "no-update": "#F44336",
+        "dark": "#121212",
+        "dark-surface": "#1E1E1E",
+        "dark-card": "#272727"
+      },
+      "fontFamily": {
+        "heebo": [
+          "Heebo",
+          "sans-serif"
+        ],
+        "sans": [
+          "Inter",
+          "sans-serif"
+        ]
+      }
+    }
+  }
+};</script>
+    <style>
+        body { font-family: 'Inter', sans-serif;
+            direction: rtl;
+        }
+    </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;500;600;700;800;900&amp;display=swap"><style>
+  .highlighted-section {
+    outline: 2px solid #3F20FB;
+    background-color: rgba(63, 32, 251, 0.1);
+  }
+
+  .edit-button {
+    position: absolute;
+    z-index: 1000;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  html, body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  </style></head>
+<body class="bg-dark text-white font-heebo">
+    <!-- Update Status Screen -->
+    <div id="update-status-screen" class="min-h-screen bg-dark">
+        <!-- App Bar -->
+        <header id="header" class="bg-dark-surface p-4 fixed top-0 w-full z-10 shadow-md">
+            <div class="flex items-center">
+                <button id="back-btn" class="p-2 ml-2 rounded-full hover:bg-gray-700">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <h1 class="text-xl font-bold">עדכון מצב</h1>
+            </div>
+        </header>
+        
+        <div class="mt-20 px-6">
+            <!-- Current Status -->
+            <div id="current-status" class="bg-dark-surface p-5 rounded-lg mb-8 text-center">
+                <h2 class="text-lg mb-2">המצב שלך כרגע</h2>
+                <div id="current-status-indicator" class="text-safe font-bold text-xl mb-2 flex justify-center items-center">
+                    <i class="fa-solid fa-check-circle ml-2"></i>
+                    בטוח
+                </div>
+                <div id="last-updated" class="text-xs text-gray-400">
+                    עודכן לאחרונה: היום, 14:35
+                </div>
+            </div>
+            
+            <!-- Status Buttons -->
+            <div id="status-buttons" class="space-y-6">
+                <button id="shelter-btn" class="w-full bg-shelter bg-opacity-20 border-2 border-shelter rounded-xl p-8 flex flex-col items-center transition-transform active:scale-95">
+                    <i class="fa-solid fa-shield-halved text-5xl mb-6 text-shelter"></i>
+                    <span class="text-xl font-bold">נכנסתי למרחב מוגן</span>
+                </button>
+                
+                <button id="safe-btn" class="w-full bg-safe bg-opacity-20 border-2 border-safe rounded-xl p-8 flex flex-col items-center transition-transform active:scale-95">
+                    <i class="fa-solid fa-check-circle text-5xl mb-6 text-safe"></i>
+                    <span class="text-xl font-bold">חזרתי לשגרה</span>
+                </button>
+            </div>
+            
+            <!-- Status Update Confirmation -->
+            <div id="status-confirmation" class="hidden mt-8 bg-blue-600 bg-opacity-20 border border-blue-500 rounded-lg p-4 text-center">
+                <i class="fa-solid fa-circle-check text-blue-500 text-2xl mb-2"></i>
+                <p class="text-blue-200">הסטטוס עודכן בהצלחה!</p>
+            </div>
+            
+            <!-- Information Note -->
+            <div class="mt-8 text-sm text-gray-400 text-center px-4">
+                העדכון ישלח באופן אוטומטי לכל אנשי הקשר ששמרו אותך
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Get current date and time for display
+        function updateCurrentTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const timeString = `היום, ${hours}:${minutes}`;
+            document.getElementById('last-updated').innerText = `עודכן לאחרונה: ${timeString}`;
+        }
+        
+        // Update time on load
+        updateCurrentTime();
+        
+        // Handle status button clicks
+        document.getElementById('shelter-btn').addEventListener('click', function() {
+            // Update the status indicator
+            const statusIndicator = document.getElementById('current-status-indicator');
+            statusIndicator.className = 'text-shelter font-bold text-xl mb-2 flex justify-center items-center';
+            statusIndicator.innerHTML = '<i class="fa-solid fa-shield-halved ml-2"></i> במרחב מוגן';
+            
+            // Update timestamp
+            updateCurrentTime();
+            
+            // Show confirmation
+            showConfirmation();
+            
+            // Provide haptic feedback if available
+            if (window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(100);
+            }
+        });
+        
+        document.getElementById('safe-btn').addEventListener('click', function() {
+            // Update the status indicator
+            const statusIndicator = document.getElementById('current-status-indicator');
+            statusIndicator.className = 'text-safe font-bold text-xl mb-2 flex justify-center items-center';
+            statusIndicator.innerHTML = '<i class="fa-solid fa-check-circle ml-2"></i> בטוח';
+            
+            // Update timestamp
+            updateCurrentTime();
+            
+            // Show confirmation
+            showConfirmation();
+            
+            // Provide haptic feedback if available
+            if (window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(100);
+            }
+        });
+        
+        function showConfirmation() {
+            const confirmation = document.getElementById('status-confirmation');
+            confirmation.classList.remove('hidden');
+            
+            // Hide confirmation after 3 seconds
+            setTimeout(function() {
+                confirmation.classList.add('hidden');
+            }, 3000);
+        }
+        
+        // Back button functionality
+        document.getElementById('back-btn').addEventListener('click', function() {
+            // In a real app, this would navigate back to the home screen
+            // For demo purposes, you could add window.history.back() or other navigation
+            console.log('Navigate back to home screen');
+        });
+    </script>
+
+</body></html>

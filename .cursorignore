@@ -1,0 +1,46 @@
+# Python bytecode and cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+
+# Node modules (Capacitor)
+node_modules/
+.npm/
+
+# Build outputs
+dist/
+build/
+out/
+android/
+ios/
+.capacitor/
+
+# Environment files
+.env*
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Vercel
+.vercel/
+
+# Large media files (if any)
+*.mp4
+*.mov
+*.avi
+*.mkv 
